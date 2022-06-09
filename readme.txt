@@ -16,3 +16,16 @@
       - 订单: 订单编号、订单日期、订单金额、订单数量、订单状态、所属用户
       - 订单详情: 图书、数量、所属订单
       - 购物车项: 图书、数量、所属用户
+
+//////////
+3. 显示主页面 (index页面)
+   - 新建 BookDAO, BookDAOImpl: getBookList()
+   - 新建 BookService, BookServiceImpl: getBookList()
+   - 新建 BookController: index()
+   - 编辑 index.html
+
+//////////
+4. 首页上登陆成功之后显示欢迎语和购物车数量
+
+//////////
+5. 点击具体图书的添加到购物车按钮
