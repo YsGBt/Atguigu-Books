@@ -4,6 +4,7 @@ import com.atguigu.book.bean.Cart;
 import com.atguigu.book.bean.CartItem;
 import com.atguigu.book.bean.User;
 import com.atguigu.book.dao.CartItemDAO;
+import com.atguigu.book.service.BookService;
 import com.atguigu.book.service.CartItemService;
 import com.atguigu.myssm.util.ConnUtil;
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class CartItemServiceImpl implements CartItemService {
 
   private CartItemDAO cartItemDAO;
+  private BookService bookService;
 
   @Override
   public void addCartItem(CartItem cartItem) {
@@ -42,13 +44,13 @@ public class CartItemServiceImpl implements CartItemService {
     // 1. 如果当前用户的购物车中已经存在这个图书了，那么将购物车中这本图书的数量+1
     // 2. 否则，在我的购物车中新增一个这本图书的CartItem，数量是1
     if (cart != null) {
-      Map<Integer, CartItem> cartItemMap= cart.getCartItemMap();
+      Map<Integer, CartItem> cartItemMap = cart.getCartItemMap();
       if (cartItemMap == null) {
         cartItemMap = new HashMap<>();
       }
 
       if (cartItemMap.containsKey(cartItem.getBookId())) {
-        CartItem cartItemTemp= cartItemMap.get(cartItem.getBookId());
+        CartItem cartItemTemp = cartItemMap.get(cartItem.getBookId());
         cartItemTemp.setBuyCount(cartItemTemp.getBuyCount() + 1);
         updateCartItem(cartItemTemp);
       } else {
@@ -60,19 +62,28 @@ public class CartItemServiceImpl implements CartItemService {
   }
 
   @Override
-  public Cart getCart(User user) {
+  public List<CartItem> getCartItemList(User user) {
     try {
       Connection conn = ConnUtil.getConnection();
       List<CartItem> cartItemList = cartItemDAO.getCartItemList(conn, user);
-      Map<Integer, CartItem> cartItemMap = new HashMap<>();
       for (CartItem cartItem : cartItemList) {
-        cartItemMap.put(cartItem.getBookId(), cartItem);
+        cartItem.setBook(bookService.getBookById(cartItem.getBookId()));
       }
-      Cart cart = new Cart();
-      cart.setCartItemMap(cartItemMap);
-      return cart;
+      return cartItemList;
     } catch (SQLException e) {
-      throw new RuntimeException("CartItemServiceImpl Failure: updateCartItem");
+      throw new RuntimeException("CartItemServiceImpl Failure: getCartItemList");
     }
+  }
+
+  @Override
+  public Cart getCart(User user) {
+    List<CartItem> cartItemList = this.getCartItemList(user);
+    Map<Integer, CartItem> cartItemMap = new HashMap<>();
+    for (CartItem cartItem : cartItemList) {
+      cartItemMap.put(cartItem.getBookId(), cartItem);
+    }
+    Cart cart = new Cart();
+    cart.setCartItemMap(cartItemMap);
+    return cart;
   }
 }

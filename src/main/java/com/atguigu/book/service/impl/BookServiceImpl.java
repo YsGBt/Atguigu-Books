@@ -21,4 +21,14 @@ public class BookServiceImpl implements BookService {
       throw new RuntimeException("BookService Failure: getBookList");
     }
   }
+
+  @Override
+  public Book getBookById(Integer id) {
+    try {
+      Connection conn = ConnUtil.getConnection();
+      return bookDAO.getBookById(conn, id);
+    } catch (SQLException e) {
+      throw new RuntimeException("BookService Failure: getBookById");
+    }
+  }
 }

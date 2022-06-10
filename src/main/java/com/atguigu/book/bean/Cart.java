@@ -41,4 +41,16 @@ public class Cart implements Serializable {
     return 0;
   }
 
+  // 购物车中书本的总数量，而不是购物车项的总数量
+  public Integer getTotalBookCount() {
+    if (cartItemMap != null) {
+      Integer count = 0;
+      for (Map.Entry<Integer, CartItem> entry : cartItemMap.entrySet()) {
+        count += entry.getValue().getBuyCount();
+      }
+      return count;
+    }
+    return 0;
+  }
+
 }

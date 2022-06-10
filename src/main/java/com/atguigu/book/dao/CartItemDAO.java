@@ -18,4 +18,7 @@ public interface CartItemDAO {
 
   // 获取特定用户的所有购物车项
   List<CartItem> getCartItemList(Connection conn, User user);
+
+  // 删除指定的购物车项
+  boolean delCartItem(Connection conn, CartItem cartItem);
 }

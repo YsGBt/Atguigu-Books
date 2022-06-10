@@ -7,4 +7,6 @@ public interface BookService {
 
   List<Book> getBookList();
 
+  Book getBookById(Integer id);
+
 }

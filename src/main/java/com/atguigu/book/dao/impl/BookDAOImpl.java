@@ -9,6 +9,13 @@ import java.util.List;
 public class BookDAOImpl extends BaseDAO<Book> implements BookDAO {
 
   @Override
+  public Book getBookById(Connection conn, Integer id) {
+    String sql = "select id, bookImg, bookName, price, author, saleCount, bookCount, bookStatus from t_book where id = ?";
+    Book book = getBean(conn, sql, id);
+    return book;
+  }
+
+  @Override
   public List<Book> getBookList(Connection conn) {
     String sql = "select id, bookImg, bookName, price, author, saleCount, bookCount, bookStatus from t_book";
     List<Book> bookList = getBeanList(conn, sql);

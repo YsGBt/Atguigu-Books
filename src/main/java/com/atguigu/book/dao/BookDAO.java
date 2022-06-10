@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface BookDAO {
 
+  Book getBookById(Connection conn, Integer id);
+
   List<Book> getBookList(Connection conn);
 
   List<Book> getBookList(Connection conn, Integer bookStatus);
