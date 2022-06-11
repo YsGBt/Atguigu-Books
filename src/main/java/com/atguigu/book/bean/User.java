@@ -1,6 +1,7 @@
 package com.atguigu.book.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable {
 
@@ -14,6 +15,7 @@ public class User implements Serializable {
   private Integer role;
 
   private Cart cart;
+  private List<OrderBean> orderBeanList; // 1:N
 
   public User() {
   }
@@ -64,6 +66,14 @@ public class User implements Serializable {
 
   public void setCart(Cart cart) {
     this.cart = cart;
+  }
+
+  public List<OrderBean> getOrderBeanList() {
+    return orderBeanList;
+  }
+
+  public void setOrderBeanList(List<OrderBean> orderBeanList) {
+    this.orderBeanList = orderBeanList;
   }
 
   @Override

@@ -4,6 +4,7 @@ import com.atguigu.book.bean.OrderBean;
 import com.atguigu.book.bean.User;
 import com.atguigu.book.service.OrderBeanService;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
@@ -34,5 +35,13 @@ public class OrderController {
     orderBeanService.addOrderBean(orderBean);
 
     return "index";
+  }
+
+  // 查看订单列表
+  public String getOrderList(HttpSession session) {
+    User user = (User) session.getAttribute("currentUser");
+    List<OrderBean> orderBeanList = orderBeanService.getOrderBeanList(user);
+    user.setOrderBeanList(orderBeanList);
+    return "order/order";
   }
 }

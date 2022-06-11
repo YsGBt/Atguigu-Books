@@ -18,6 +18,8 @@ public class OrderBean implements Serializable {
 
   private List<OrderItem> orderItemList; // 1:N
 
+  private Integer totalBookCount;
+
   public OrderBean() {
   }
 
@@ -83,6 +85,14 @@ public class OrderBean implements Serializable {
 
   public void setOrderItemList(List<OrderItem> orderItemList) {
     this.orderItemList = orderItemList;
+  }
+
+  public void setTotalBookCount(Integer totalBookCount) {
+    this.totalBookCount = totalBookCount;
+  }
+
+  public Integer getTotalBookCount() {
+    return totalBookCount;
   }
 
   @Override

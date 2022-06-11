@@ -1,9 +1,11 @@
 package com.atguigu.book.dao.impl;
 
 import com.atguigu.book.bean.OrderBean;
+import com.atguigu.book.bean.User;
 import com.atguigu.book.dao.OrderBeanDAO;
 import com.atguigu.myssm.basedao.BaseDAO;
 import java.sql.Connection;
+import java.util.List;
 
 public class OrderBeanDAOImpl extends BaseDAO<OrderBean> implements OrderBeanDAO {
 
@@ -19,5 +21,12 @@ public class OrderBeanDAOImpl extends BaseDAO<OrderBean> implements OrderBeanDAO
     Integer id = (Integer) getValue(conn, sql2, orderBean.getOrderNo());
     orderBean.setId(id);
     return count == 1;
+  }
+
+  @Override
+  public List<OrderBean> getOrderBeanList(Connection conn, User user) {
+    String sql = "select id, orderNo, orderDate, orderUser orderUserId, orderMoney, orderStatus from t_order where orderUser = ?";
+    List<OrderBean> orderBeanList = getBeanList(conn, sql, user.getId());
+    return orderBeanList;
   }
 }
