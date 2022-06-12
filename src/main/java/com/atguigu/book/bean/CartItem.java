@@ -1,6 +1,7 @@
 package com.atguigu.book.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 // 我们应该还需要设计一个Cart类，代表购物车这个实体
 public class CartItem implements Serializable {
@@ -14,6 +15,8 @@ public class CartItem implements Serializable {
   private Integer buyCount;
   private Integer userBeanId;
   private User userBean;
+
+  private Double totalMoney; // book.price * buyCount
 
   public CartItem() {
   }
@@ -64,6 +67,17 @@ public class CartItem implements Serializable {
 
   public void setUserBean(User userBean) {
     this.userBean = userBean;
+  }
+
+  public Double getTotalMoney() {
+    return getBigDecimalTotalMoney().doubleValue();
+  }
+
+  public BigDecimal getBigDecimalTotalMoney() {
+    BigDecimal bigDecimalPrice = new BigDecimal(this.book.getPrice() + "");
+    BigDecimal bigDecimalBuyCount = new BigDecimal(this.buyCount + "");
+    BigDecimal bigDecimalTotalMoney = bigDecimalPrice.multiply(bigDecimalBuyCount);
+    return bigDecimalTotalMoney;
   }
 
   @Override

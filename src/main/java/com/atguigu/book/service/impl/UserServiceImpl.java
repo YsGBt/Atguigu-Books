@@ -20,4 +20,14 @@ public class UserServiceImpl implements UserService {
       throw new RuntimeException("UserService Failure: login");
     }
   }
+
+  @Override
+  public void register(User user) {
+    try {
+      Connection conn = ConnUtil.getConnection();
+      userDAO.addUser(conn, user);
+    } catch (SQLException e) {
+      throw new RuntimeException("UserService Failure: register");
+    }
+  }
 }

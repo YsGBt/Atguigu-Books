@@ -27,9 +27,8 @@ public class CartItemDAOImpl extends BaseDAO<CartItem> implements CartItemDAO {
 
   @Override
   public boolean updateCartItem(Connection conn, CartItem cartItem) {
-    String sql = "update t_cart_item set book=?, buyCount=?, userBean=? where id=?";
-    int count = update(conn, sql, cartItem.getBookId(), cartItem.getBuyCount(),
-        cartItem.getUserBeanId(), cartItem.getId());
+    String sql = "update t_cart_item set buyCount=? where id=?";
+    int count = update(conn, sql, cartItem.getBuyCount(), cartItem.getId());
     return count == 1;
   }
 

@@ -29,4 +29,13 @@ public class CartController {
     cartItemService.addOrUpdateCartItem(user.getCart(), cartItem);
     return "redirect:cart.do";
   }
+
+  public String editCart(Integer cartItemId, Integer buyCount) {
+    CartItem cartItem = new CartItem();
+    cartItem.setId(cartItemId);
+    cartItem.setBuyCount(buyCount);
+    cartItemService.updateCartItem(cartItem);
+    // 重新查询一次
+    return "redirect:cart.do";
+  }
 }

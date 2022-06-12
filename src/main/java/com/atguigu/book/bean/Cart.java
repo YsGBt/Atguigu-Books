@@ -1,6 +1,7 @@
 package com.atguigu.book.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Map;
 
 public class Cart implements Serializable {
@@ -23,14 +24,14 @@ public class Cart implements Serializable {
 
   // 购物车的总金额
   public Double getTotalMoney() {
-    Double totalMoney = 0.0;
+    BigDecimal totalMoney = new BigDecimal("0.0");
     if (cartItemMap != null && cartItemMap.size() > 0) {
       for (Map.Entry<Integer, CartItem> entry : cartItemMap.entrySet()) {
         CartItem cartItem = entry.getValue();
-        totalMoney += cartItem.getBook().getPrice() * cartItem.getBuyCount();
+        totalMoney = totalMoney.add(cartItem.getBigDecimalTotalMoney());
       }
     }
-    return totalMoney;
+    return totalMoney.doubleValue();
   }
 
   // 购物车中购物项的数量

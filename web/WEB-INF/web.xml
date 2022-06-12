@@ -17,5 +17,35 @@
     <param-name>applicationContextLocation</param-name>
     <param-value>applicationContext.xml</param-value>
   </context-param>
+  
+  <servlet>
+    <servlet-name>KaptchaServlet</servlet-name>
+    <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+
+    <init-param>
+      <param-name>kaptcha.image.width</param-name>
+      <param-value>120</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>kaptcha.image.height</param-name>
+      <param-value>40</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>kaptcha.textproducer.font.size</param-name>
+      <param-value>28</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>kaptcha.noise.impl</param-name>
+      <param-value>com.google.code.kaptcha.impl.NoNoise</param-value>
+    </init-param>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>KaptchaServlet</servlet-name>
+    <url-pattern>/kaptcha.jpg</url-pattern>
+  </servlet-mapping>
 
 </web-app>

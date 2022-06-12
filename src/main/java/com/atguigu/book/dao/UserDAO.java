@@ -6,4 +6,6 @@ import java.sql.Connection;
 public interface UserDAO {
 
   User getUser(Connection conn, String uname, String pwd);
+
+  boolean addUser(Connection conn, User user);
 }

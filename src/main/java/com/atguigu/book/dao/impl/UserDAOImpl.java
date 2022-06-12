@@ -13,4 +13,11 @@ public class UserDAOImpl extends BaseDAO<User> implements UserDAO {
     User user = getBean(conn, sql, uname, pwd);
     return user;
   }
+
+  @Override
+  public boolean addUser(Connection conn, User user) {
+    String sql = "insert into t_user(uname, pwd, email, role) values(?,?,?,0)";
+    int count = update(conn, sql, user.getUname(), user.getPwd(), user.getEmail());
+    return count == 1;
+  }
 }
