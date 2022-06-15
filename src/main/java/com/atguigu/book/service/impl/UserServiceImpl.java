@@ -30,4 +30,14 @@ public class UserServiceImpl implements UserService {
       throw new RuntimeException("UserService Failure: register");
     }
   }
+
+  @Override
+  public User getUer(String uname) {
+    try {
+      Connection conn = ConnUtil.getConnection();
+      return userDAO.getUser(conn, uname);
+    } catch (SQLException e) {
+      throw new RuntimeException("UserService Failure: getUer");
+    }
+  }
 }

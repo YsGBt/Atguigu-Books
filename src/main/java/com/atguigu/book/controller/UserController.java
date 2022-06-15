@@ -32,7 +32,8 @@ public class UserController {
       resp.setCharacterEncoding("UTF-8");
       resp.setContentType("text/html;charset=UTF-8");
       try (PrintWriter out = resp.getWriter();) {
-        out.println("<script>alert('验证码不正确!');window.location.href='page.do?operate=page&page=user/regist';</script>");
+        out.println(
+            "<script>alert('验证码不正确!');window.location.href='page.do?operate=page&page=user/regist';</script>");
 //        out.println("<script>alert('验证码不正确!');</script>");
       } catch (IOException e) {
         throw new RuntimeException(e);
@@ -46,5 +47,18 @@ public class UserController {
     user.setEmail(email);
     userService.register(user);
     return "user/login";
+  }
+
+  public String checkUname(String uname) {
+    User user = userService.getUer(uname);
+    if (user != null) {
+      // 用户名已经被占用，不可以注册
+      return "json:{'uname':'1'}";
+//      return "ajax:1";
+    } else {
+      // 用户可以注册
+      return "json:{'uname':'0'}";
+//      return "ajax:0";
+    }
   }
 }

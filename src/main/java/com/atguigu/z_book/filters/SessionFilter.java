@@ -40,7 +40,7 @@ public class SessionFilter implements Filter {
     String uri = request.getRequestURI();
     String queryString = request.getQueryString();
     String str = uri + "?" + queryString;
-    if (whiteList.contains(str)) {
+    if (whiteList.contains(str) || uri.equals("/Atguigu_Books_war_exploded/user.do")) {
       filterChain.doFilter(request, response);
       return;
     }

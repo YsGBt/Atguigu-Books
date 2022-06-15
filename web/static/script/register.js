@@ -61,3 +61,48 @@ function preRegister() {
 function $(id) {
   return document.getElementById(id);
 }
+
+// 如果想要发送异步请求，我们需要一个关键的对象 XMLHttpRequest
+// 定义 XMLHttpRequest对象
+let xmlHttpRequest;
+
+// 完成 XMLHttpRequest对象的初始化
+function createXMLHttpRequest() {
+  if (window.XMLHttpRequest) {
+    // 符合DOM2标准的浏览器，xmlHttpRequest的创建方式
+    xmlHttpRequest = new XMLHttpRequest();
+  } else if (window.ActiveXObject) {
+    // IE 浏览器
+    try {
+      xmlHttpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch (e) {
+      try {
+        xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+      } catch (e) {
+      }
+    }
+  }
+}
+
+function checkUname(uname) {
+  createXMLHttpRequest();
+  let uri = "user.do?operate=checkUname&uname=" + uname;
+  // 发送方式(Get 方式) 给谁发请求(user.do) 是否异步(true -> 异步)
+  xmlHttpRequest.open("GET", uri, true);
+  // 设置回调函数
+  xmlHttpRequest.onreadystatechange = checkUnameCB;
+  // 发送请求
+  xmlHttpRequest.send();
+}
+
+function checkUnameCB() {
+  if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
+    // xmlHttpRequest.responseText 表示 服务器端响应给我的文本内容
+    let responseText = xmlHttpRequest.responseText;
+    // {'uname':'1'} -> 用户名已存在
+    // {'uname':'0'} -> 用户名可用
+    if (responseText == "{'uname':'1'}") {
+      window.alert("用户名已经被注册!");
+    }
+  }
+}

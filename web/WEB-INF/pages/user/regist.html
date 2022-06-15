@@ -28,7 +28,7 @@
           <div class="form-item">
             <div>
               <label>用户名称:</label>
-              <input id="unameTxt" type="text" name="uname" placeholder="请输入用户名" />
+              <input id="unameTxt" type="text" name="uname" placeholder="请输入用户名" onblur="checkUname(this.value)"/>
             </div>
             <span id="unameSpan" class="errMess">用户名应为6~16位数字和字母组成</span>
           </div>

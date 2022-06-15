@@ -7,5 +7,7 @@ public interface UserDAO {
 
   User getUser(Connection conn, String uname, String pwd);
 
+  User getUser(Connection conn, String uname);
+
   boolean addUser(Connection conn, User user);
 }
