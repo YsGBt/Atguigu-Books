@@ -34,7 +34,7 @@
       <div class="topbar-right" th:if="${session.currentUser != null}">
         <span>欢迎你<b th:text="${session.currentUser.uname}">张总</b></span>
         <a th:href="@{/page.do?operate=page&page=user/login}" class="register">注销</a>
-        <a th:href="@{/page.do?operate=page&page=cart/cart}"  class="cart iconfont icon-gouwuche">
+        <a th:href="@{/page.do(operate='page',page='cart/cart')}"  class="cart iconfont icon-gouwuche">
           购物车
           <div class="cart-num" th:text="${session.currentUser.cart.getTotalCount()}">3</div>
         </a>

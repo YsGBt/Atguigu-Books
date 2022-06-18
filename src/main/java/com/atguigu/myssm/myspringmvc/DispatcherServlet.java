@@ -94,6 +94,9 @@ public class DispatcherServlet extends ViewBaseServlet {
           }
 
           String methodReturnStr = (String) methodReturnObj;
+          if (methodReturnStr == "") {
+            return;
+          }
 
           if (methodReturnStr.startsWith("redirect:")) { // 比如: redirect:fruit.do
             String redirectStr = methodReturnStr.substring("redirect:".length());
