@@ -10,6 +10,7 @@
   <script th:src="@{/static/script/vue.js}"></script>
   <script th:src="@{/static/script/axios.min.js}"></script>
   <script th:src="@{/static/script/cart.js}"></script>
+  <base th:href="@{/}">
 </head>
 <body>
 <div class="header">
@@ -45,20 +46,20 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="cartItem : ${session.currentUser.cart.cartItemMap.values()}">
+      <tr v-for="cartItem in cart.cartItemMap">
         <td>
-          <img th:src="@{|/static/uploads/${cartItem.book.bookImg}|}" alt=""/>
+          <img v-bind:src="'static/uploads/' + cartItem.book.bookImg" alt=""/>
         </td>
-        <td th:text="${cartItem.book.bookName}">活着</td>
+        <td>{{cartItem.book.bookName}}</td>
         <td>
           <span class="count"
-                th:onclick="|editCart(${cartItem.id}, ${cartItem.buyCount - 1})|">-</span>
-          <input class="count-num" type="text" value="1" th:value="${cartItem.buyCount}"/>
+                @click="editCart(cartItem.id, cartItem.buyCount - 1)">-</span>
+          <input class="count-num" type="text" value="1" v-bind:value="cartItem.buyCount"/>
           <span class="count"
-                th:onclick="|editCart(${cartItem.id}, ${cartItem.buyCount + 1})|">+</span>
+                @click="editCart(cartItem.id, cartItem.buyCount + 1)">+</span>
         </td>
-        <td th:text="${cartItem.book.price}">36.8</td>
-        <td th:text="${cartItem.totalMoney}">36.8</td>
+        <td>{{cartItem.book.price}}</td>
+        <td>{{cartItem.totalMoney}}</td>
         <td><a href="">删除</a></td>
       </tr>
       </tbody>
@@ -69,9 +70,8 @@
         <a href="#">继续购物</a>
       </div>
       <div class="footer-right">
-        <div>共<span th:text="${session.currentUser.cart.getTotalBookCount()}">3</span>件商品</div>
-        <div class="total-price">总金额<span
-            th:text="${session.currentUser.cart.getTotalMoney()}">99.9</span>元
+        <div>共<span>{{cart.totalBookCount}}</span>件商品</div>
+        <div class="total-price">总金额<span>{{cart.totalMoney}}</span>元
         </div>
         <a class="pay" th:href="@{/order.do(operate='checkout')}">去结账</a>
       </div>
@@ -84,19 +84,19 @@
       <ul>
         <li>
           <a href="">
-            <img src="../../static/img/bottom1.png" alt=""/>
+            <img src="/static/img/bottom1.png" alt=""/>
             <span>大咖级讲师亲自授课</span>
           </a>
         </li>
         <li>
           <a href="">
-            <img src="../../static/img/bottom.png" alt=""/>
+            <img src="/static/img/bottom.png" alt=""/>
             <span>课程为学员成长持续赋能</span>
           </a>
         </li>
         <li>
           <a href="">
-            <img src="../../static/img/bottom2.png" alt=""/>
+            <img src="/static/img/bottom2.png" alt=""/>
             <span>学员真是情况大公开</span>
           </a>
         </li>

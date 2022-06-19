@@ -103,10 +103,11 @@ public class DispatcherServlet extends ViewBaseServlet {
             resp.sendRedirect(redirectStr);
           } else if (methodReturnStr.startsWith("json:")) {
             String jsonStr = methodReturnStr.substring("json:".length());
-            try (PrintWriter out = resp.getWriter();) {
-              out.print(jsonStr);
-//              out.flush();
-            }
+            resp.setCharacterEncoding("UTF-8");
+            resp.setContentType("application/json;charset=utf-8");
+            PrintWriter out = resp.getWriter();
+            out.print(jsonStr);
+            out.close();
           } else {
             super.processTemplate(methodReturnStr, req, resp); // 比如: edit
           }

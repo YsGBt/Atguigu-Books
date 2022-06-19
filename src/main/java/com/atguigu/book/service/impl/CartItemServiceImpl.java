@@ -68,6 +68,8 @@ public class CartItemServiceImpl implements CartItemService {
       List<CartItem> cartItemList = cartItemDAO.getCartItemList(conn, user);
       for (CartItem cartItem : cartItemList) {
         cartItem.setBook(bookService.getBookById(cartItem.getBookId()));
+        // 此处需要调用getTotalMoney()，目的是执行getTotalMoney()内部的代码，让book的price乘以buyCount，从而计算出totalMoney这恶搞属性的值
+        cartItem.getTotalMoney();
       }
       return cartItemList;
     } catch (SQLException e) {

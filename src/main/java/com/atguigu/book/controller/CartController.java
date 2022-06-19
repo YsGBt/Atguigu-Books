@@ -40,9 +40,23 @@ public class CartController {
     return "redirect:cart.do";
   }
 
+  public String editCartInfo(Integer cartItemId, Integer buyCount) {
+    CartItem cartItem = new CartItem();
+    cartItem.setId(cartItemId);
+    cartItem.setBuyCount(buyCount);
+    cartItemService.updateCartItem(cartItem);
+    return null;
+  }
+
   public String cartInfo(HttpSession session) {
     User user = (User) session.getAttribute("currentUser");
     Cart cart = cartItemService.getCart(user);
+    // 调用Cart中的三个属性的get方法，目的是在此处计算这三个属性的值，否则这三个属性为null，
+    // 导致的结果就是下一步的gson转化时，为null的属性会被忽略掉。
+    cart.getTotalBookCount();
+    cart.getTotalCount();
+    cart.getTotalMoney();
+
     user.setCart(cart);
     Gson gson = new Gson();
     String cartJsonStr = gson.toJson(cart);

@@ -11,6 +11,10 @@ public class Cart implements Serializable {
 
   private Map<Integer, CartItem> cartItemMap; // 购物车中购物车项的集合，这个Map集合中的Key是Book的id
 
+  private Integer totalCount;
+  private Integer totalBookCount;
+  private Double totalMoney;
+
   public Cart() {
   }
 
@@ -31,27 +35,28 @@ public class Cart implements Serializable {
         totalMoney = totalMoney.add(cartItem.getBigDecimalTotalMoney());
       }
     }
-    return totalMoney.doubleValue();
+    this.totalMoney = totalMoney.doubleValue();
+    return this.totalMoney;
   }
 
   // 购物车中购物项的数量
   public Integer getTotalCount() {
+    this.totalCount = 0;
     if (cartItemMap != null) {
-      return cartItemMap.size();
+      this.totalCount = cartItemMap.size();
     }
-    return 0;
+    return this.totalCount;
   }
 
   // 购物车中书本的总数量，而不是购物车项的总数量
   public Integer getTotalBookCount() {
+    this.totalBookCount = 0;
     if (cartItemMap != null) {
-      Integer count = 0;
       for (Map.Entry<Integer, CartItem> entry : cartItemMap.entrySet()) {
-        count += entry.getValue().getBuyCount();
+        this.totalBookCount += entry.getValue().getBuyCount();
       }
-      return count;
     }
-    return 0;
+    return this.totalBookCount;
   }
 
 }

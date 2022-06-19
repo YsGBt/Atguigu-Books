@@ -69,8 +69,13 @@ public class CartItem implements Serializable {
     this.userBean = userBean;
   }
 
+  public void setTotalMoney(Double totalMoney) {
+    this.totalMoney = totalMoney;
+  }
+
   public Double getTotalMoney() {
-    return getBigDecimalTotalMoney().doubleValue();
+    this.totalMoney = getBigDecimalTotalMoney().doubleValue();
+    return this.totalMoney;
   }
 
   public BigDecimal getBigDecimalTotalMoney() {
